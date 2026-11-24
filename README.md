@@ -34,4 +34,9 @@ The runner uses a fresh browser scenario per invocation. It records the real exi
 
 ## Verification record
 
-`npm test` checks five state transitions. A separate local Chromium test exercises the positive and negative flows using the visible controls. Record the Kane CLI version, timestamp, and matching/off-target run verdicts after executing the authenticated Kane tests. The local tests establish application behavior. An authenticated run provides the contest's evidence.
+`npm test` checks five state transitions. On November 24, 2026 at 03:57 UTC, an authenticated Kane CLI 0.10.8 run exercised both browser scenarios against the local synthetic fixture. Each returned exit code `0` and a terminal verdict of `passed`.
+
+| Browser scenario | Observed result |
+| --- | --- |
+| Matching sample (10 of 100) | The approval control became available and Kane confirmed revision 2 was approved. |
+| Off-target sample (9 of 100) | The canary check failed, rollback remained verified, and revision 2 stayed unapproved with approval disabled. |
