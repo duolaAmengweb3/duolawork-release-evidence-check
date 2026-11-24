@@ -1,0 +1,5 @@
+artifacts/
+node_modules/
+.testmuai/
+.env*
+.DS_Store

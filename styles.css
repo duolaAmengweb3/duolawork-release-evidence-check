@@ -1,0 +1,85 @@
+:root {
+  font-family: 'Avenir Next', 'Segoe UI', sans-serif;
+  font-size: 16px;
+  color: #162338;
+  background: #ebeff2;
+  color-scheme: light;
+  --muted: #475870;
+  --line: #dbe2e9;
+  --accent: #114f46;
+  --accent-hover: #0c3d36;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+h1, h2, h3, p { margin: 0; }
+button, select { font: inherit; }
+
+.workspace { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
+.release-heading {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  gap: 12px 24px;
+  padding: 30px clamp(22px, 5vw, 44px);
+  border-radius: 16px;
+  background: #152339;
+  color: #f8fcff;
+  margin-bottom: 20px;
+}
+.eyebrow { color: #a6dccc; font-size: .86rem; font-weight: 650; margin-bottom: 6px; }
+h1 { font-size: clamp(1.9rem, 5vw, 3.15rem); line-height: 1.1; letter-spacing: -.04em; }
+.release-description { grid-column: 1 / -1; max-width: 56ch; color: #d2deee; line-height: 1.5; }
+.release-status {
+  border-radius: 6px;
+  padding: 8px 12px;
+  background: #364761;
+  color: #fff;
+  font-size: .86rem;
+  font-weight: 650;
+}
+.release-status[data-state='verified'] { background: #bce9d6; color: #173c35; }
+
+.panel { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 20px 24px; margin-bottom: 16px; }
+h2 { font-size: 1.19rem; letter-spacing: -.015em; }
+h3 { font-size: 1.05rem; }
+.controls form { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto; gap: 12px; align-items: end; margin-top: 12px; }
+label { display: grid; gap: 5px; font-size: .86rem; font-weight: 650; color: var(--muted); }
+select, button { min-height: 42px; border-radius: 7px; }
+select { width: 100%; border: 1px solid #bac8d6; background: white; color: #162338; padding: 8px 10px; }
+button { background: var(--accent); color: white; padding: 8px 13px; border: 1px solid transparent; cursor: pointer; font-weight: 650; }
+button:hover { background: var(--accent-hover); }
+button:disabled { background: #e1e6eb; color: #49596c; cursor: not-allowed; }
+button:focus-visible, select:focus-visible { outline: 3px solid #3974c3; outline-offset: 2px; }
+.secondary { background: #fff; color: #244457; border-color: #bccad8; }
+.secondary:hover { background: #eef5f8; }
+.text-button { background: transparent; color: #21566d; font-weight: 600; padding-inline: 6px; }
+.text-button:hover { background: #eef5f8; }
+
+.evidence-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; margin-top: 12px; }
+.evidence-card { display: flex; flex-direction: column; gap: 11px; border: 1px solid var(--line); border-radius: 9px; padding: 14px; background: #fafbfc; }
+.card-heading, .approval { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.evidence-card p, .approval p { font-size: .88rem; color: var(--muted); line-height: 1.45; }
+.check-state { background: #e6eaee; color: #344457; padding: 4px 7px; border-radius: 5px; font-size: .8rem; font-weight: 700; text-align: center; }
+.check-state[data-state='verified'] { color: #124e3e; background: #d5ede2; }
+.check-state[data-state='failed'] { color: #851e2a; background: #fce1e3; }
+.check-state[data-state='stale'] { color: #713e07; background: #ffecd0; }
+.sample-actions { display: flex; flex-wrap: wrap; gap: 4px 8px; margin-top: auto; }
+.sample-actions button { font-size: .84rem; }
+.approval { margin-top: 16px; padding-top: 15px; border-top: 1px solid var(--line); }
+.approval button { flex-shrink: 0; }
+
+.activity ol { list-style: none; padding: 0; margin: 10px 0 0; }
+.activity li { display: flex; gap: 14px; align-items: baseline; padding: 9px 0; border-top: 1px solid var(--line); font-size: .88rem; line-height: 1.4; }
+.activity-revision { flex-shrink: 0; color: var(--muted); font-size: .8rem; font-weight: 650; }
+
+@media (max-width: 680px) {
+  .workspace { padding: 16px; }
+  .release-heading { grid-template-columns: 1fr; padding: 20px; }
+  .release-status { justify-self: start; }
+  .panel { padding: 16px; }
+  .evidence-grid { grid-template-columns: 1fr; }
+  .controls form { grid-template-columns: 1fr 1fr; }
+  .controls form button { grid-column: 1 / -1; }
+  .approval { flex-wrap: wrap; }
+}

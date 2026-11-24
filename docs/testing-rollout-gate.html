@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Two browser scenarios for checking when a canary rollout can be approved, and how to inspect the Kane CLI verdict.">
+  <title>Testing a rollout approval gate in the browser</title>
+  <link rel="stylesheet" href="blog.css">
+</head>
+<body>
+  <main>
+    <nav aria-label="Project"><a href="./">Release Evidence Check</a></nav>
+    <article>
+      <h1>Testing a rollout approval gate in the browser</h1>
+      <p class="intro">A release gate can calculate the right answer while the page still lets a reviewer click the wrong button. Testing both visible outcomes catches that gap.</p>
+
+      <p>I built Release Evidence Check with Codex and wrote a pair of Kane CLI scenarios around the exact workflow a release reviewer would follow. Both start from the same synthetic checkout rollout, where revision 1 is approved at 5%. Each run changes the target to 10% and checks that revision 2 awaits approval. The browser must show a stale canary measurement, a verified rollback fixture, and a disabled approval action before the test continues.</p>
+
+      <h2>Test the branches that should differ</h2>
+      <ol>
+        <li><strong>Attach a matching measurement.</strong> With ten of 100 requests in canary, the scenario checks the measurement shown on screen, verifies the approval action is enabled, and clicks it. The expected result is an approved revision 2.</li>
+        <li><strong>Attach an off-target measurement.</strong> With nine of 100 in canary, the scenario checks that the canary reports a failure, the rollout remains unapproved, and the action stays disabled. The rollback check still shows its original passing result.</li>
+      </ol>
+
+      <p>These two paths use the same settings and the same sequence up to the measurement. If the passing path fails, the release state or its controls may be out of sync. If the failing path unexpectedly opens the gate, the current measurement may have been ignored. Keeping the two scenarios close makes either failure easier to interpret.</p>
+
+      <h2>Read the result in the coding workflow</h2>
+      <p>The project’s runner takes Kane CLI’s exit code and its final machine-readable event together. It keeps the browser trace so a coding agent can inspect the actual failure before changing the app. For example, if Kane reports that the approval button became enabled in the second scenario, I’d start with the app’s mapping from evidence status to the disabled state, then rerun both paths.</p>
+
+      <pre><code>npm start
+# In a second terminal with an authenticated Kane CLI
+npm run verify:kane</code></pre>
+
+      <p>Five local state tests passed, and a separate headless Chromium check exercised both scenarios through the visible controls. The Kane runner provides the independent CLI scenarios. It uses the local synthetic demo and requires a TestMu AI profile to execute.</p>
+      <p>For the reasoning behind the gate, read <a href="rollout-evidence.html">which release checks survive a rollout change</a>.</p>
+    </article>
+  </main>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "release-evidence-check",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node serve.mjs",
+    "test": "node --test",
+    "verify:kane": "node run-kane.mjs"
+  }
+}

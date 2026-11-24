@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="How a rollout review can reuse a compatible rollback check and still require a fresh canary measurement.">
+  <title>Which release checks survive a rollout change?</title>
+  <link rel="stylesheet" href="blog.css">
+</head>
+<body>
+  <main>
+    <nav aria-label="Project"><a href="./">Release Evidence Check</a></nav>
+    <article>
+      <h1>Which release checks survive a rollout change?</h1>
+      <p class="intro">An approval is easier to trust when the reviewer can see which revision it covered and which evidence needs to be collected again.</p>
+
+      <p>Consider a checkout rollout that sends 5% of requests to a canary. The reviewer sees two passing checks and approves it. Someone then updates the target to 10%. The previous canary sample still describes what happened at 5%. Carrying its approval into the updated rollout would turn an old measurement into a claim about current behavior.</p>
+
+      <p>Release Evidence Check is a small, standalone browser demo of this situation. Applying different settings creates a new revision and clears the previous approval. The older measurement remains visible, with a label that says it needs an update and the revision it belongs to. The reviewer can see what changed without having to reconstruct it from the activity list.</p>
+
+      <h2>Each check has a different dependency</h2>
+      <p>The canary measurement is tied to a release revision. For the demo’s 10% target, an attached fixture with nine of 100 requests going to canary fails the check. A fixture with ten of 100 passes. These fixed counts make the example reproducible. Real traffic measurement would need a sampling window and a tolerance suited to the rollout.</p>
+
+      <p>The rollback fixture in this demo depends on its threshold. A traffic-only change from 5% to 10% leaves the 2% rollback threshold intact, so the previously verified rollback check still applies. Change the threshold to 4%, and the reviewer needs a fresh rollback fixture as well. The same two checks govern the approval button and explain why it is disabled.</p>
+
+      <h2>What the reviewer sees</h2>
+      <p>In the browser, you can change the rollout, attach a sample that misses the target, and see approval stay blocked. Attach the matching sample and approval becomes available. The activity list preserves the earlier approval under its original revision, with a new entry when the reviewer approves the revised configuration.</p>
+
+      <p>This was built with Codex as a synthetic checkout demo. It runs locally without external accounts, a traffic router, or production release data. For the companion article, see how the two outcomes are turned into <a href="testing-rollout-gate.html">browser test scenarios</a>.</p>
+    </article>
+  </main>
+</body>
+</html>

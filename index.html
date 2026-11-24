@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <title>Release Evidence Check</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script type="module" src="/app.mjs"></script>
+  </head>
+  <body>
+    <main class="workspace">
+      <header class="release-heading">
+        <div>
+          <p class="eyebrow">Checkout rollout</p>
+          <h1>Release Evidence Check</h1>
+        </div>
+        <output id="release-status" class="release-status" role="status"></output>
+        <p class="release-description">Review changes and verify the current revision before approving. This demo uses synthetic measurements.</p>
+      </header>
+
+      <section class="controls panel" aria-labelledby="change-title">
+        <h2 id="change-title">Rollout settings</h2>
+        <form id="rollout-form">
+          <label>Canary traffic <select id="canary-target" name="target"></select></label>
+          <label>Rollback threshold <select id="rollback-target" name="rollback"></select></label>
+          <button type="submit" class="secondary">Apply rollout</button>
+        </form>
+      </section>
+
+      <section class="panel evidence" aria-labelledby="evidence-title">
+        <h2 id="evidence-title">Evidence for revision <span id="revision">1</span></h2>
+        <div class="evidence-grid">
+          <article class="evidence-card" aria-labelledby="canary-title">
+            <div class="card-heading">
+              <h3 id="canary-title">Canary check</h3>
+              <output id="canary-status" class="check-state"></output>
+            </div>
+            <p id="canary-detail"></p>
+            <div class="sample-actions">
+              <button id="sample-pass" type="button" class="secondary">Attach matching sample</button>
+              <button id="sample-fail" type="button" class="text-button">Attach off-target sample</button>
+            </div>
+          </article>
+          <article class="evidence-card" aria-labelledby="rollback-title">
+            <div class="card-heading">
+              <h3 id="rollback-title">Rollback check</h3>
+              <output id="rollback-status" class="check-state"></output>
+            </div>
+            <p id="rollback-detail"></p>
+            <div class="sample-actions">
+              <button id="sample-rollback" type="button" class="secondary">Attach rollback fixture</button>
+            </div>
+          </article>
+        </div>
+        <div class="approval">
+          <p id="approval-detail" aria-live="polite"></p>
+          <button id="approve" type="button">Approve revision</button>
+        </div>
+      </section>
+
+      <section class="panel activity" aria-labelledby="activity-title">
+        <div class="card-heading">
+          <h2 id="activity-title">Revision activity</h2>
+          <button id="reset" type="button" class="text-button">Reset demo</button>
+        </div>
+        <ol id="activity-items"></ol>
+      </section>
+    </main>
+  </body>
+</html>
